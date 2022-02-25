@@ -58,6 +58,9 @@ namespace StarterAssets
 		public float CameraAngleOverride = 0.0f;
 		[Tooltip("For locking the camera position on all axis")]
 		public bool LockCameraPosition = false;
+		[Space(10)]
+		[Header("Interactable")]
+		public GameObject focus;
 
 		// cinemachine
 		private float _cinemachineTargetYaw;
@@ -120,6 +123,7 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
+			Interact();
 		}
 
 		private void LateUpdate()
@@ -224,6 +228,19 @@ namespace StarterAssets
 			{
 				_animator.SetFloat(_animIDSpeed, _animationBlend);
 				_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+			}
+		}
+
+		private void Interact ()
+		{
+			// If we press the interact button
+			if (_input.interact)
+			{
+				// Check if the focus cube is colliding with another object
+				if (focus.GetComponent<FocusCube>().GetInteractable() != null)
+				{
+					Debug.Log("Interact!");
+				}
 			}
 		}
 
